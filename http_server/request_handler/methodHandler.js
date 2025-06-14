@@ -1,9 +1,12 @@
 
+const fs = require("node:fs")
+const queryString = require("node:querystring");
+
 function formHandler(req, res) {
 
     switch (req.url) {
         case "/":
-            fs.readFile(`${__dirname}/pages/home.html`, "utf8", (err, data) => {
+            fs.readFile(`./pages/home.html`, "utf8", (err, data) => {
                 if (err) { throw err }
                 else {
                     res.end(data);
@@ -12,7 +15,7 @@ function formHandler(req, res) {
             break;
         case "/form":
             if (req.method === "GET") {
-                fs.readFile(`${__dirname}/pages/form.html`, "utf8", (err, data) => {
+                fs.readFile(`./pages/form.html`, "utf8", (err, data) => {
                     if (err) { throw err }
                     else {
                         res.end(data);
@@ -45,3 +48,5 @@ function formHandler(req, res) {
     }
 
 }
+
+module.exports = formHandler;

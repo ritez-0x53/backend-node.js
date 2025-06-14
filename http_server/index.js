@@ -6,13 +6,11 @@ const queryString = require("node:querystring");
 
 const simpleHandler = require("./request_handler/simpleHandler");
 const queryHandler = require("./request_handler/urlHandling");
-
+const formHandler = require("./request_handler/methodHandler")
 
 // create a server using http
 const server = http.createServer(
-    (req, res) => {
-
-    }
+   formHandler
 );
 
 // Don't forget to start the server
