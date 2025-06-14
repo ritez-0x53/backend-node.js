@@ -12,6 +12,7 @@ function simpleHandler (req, res) {
 
     if (req.url === "/" && req.method === "GET") {
         res.write("Home Page");
+
         res.end();
     } else if (req.url === "/about" && req.method === "GET") {
         res.writeHead(200, {
@@ -28,3 +29,4 @@ function simpleHandler (req, res) {
 }
 
 module.exports = simpleHandler;
+
