@@ -3,28 +3,15 @@ const http = require("node:http");
 const fs = require("node:fs");
 const url = require("node:url");
 
+
+const simpleHandler = require("./request_handler/simpleHandler");
+const queryHandler = require("./request_handler/urlHandling");
+
+
 // create a server using http
-const server = http.createServer(reqHandler)
+const server = http.createServer(queryHandler);
 
-// reqHandler function to pass a callback to server..
-function reqHandler(req, res) {
-
-    const myUrl = url.parse(req.url, true);
-    const log = new Date() + " : " + myUrl.pathname + "\n"
-    //  log file appending on every request
-    fs.appendFile("log.txt", log, () => {
-        switch (myUrl.pathname) {
-            
-        }
-
-    })
-
-
-    // handler function close here...
-}
-
-// running server...
-const port = 8080;
-server.listen(port, () => {
-    console.log("server running on port " + port);
-})
+// Don't forget to start the server
+server.listen(3000, () => {
+    console.log("Server is running on http://localhost:3000");
+});
