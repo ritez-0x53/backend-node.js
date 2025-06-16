@@ -1,5 +1,5 @@
 {
-  "name": "sql_express_app",
+  "name": "connect_db_mysql",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -9,6 +9,6 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "express": "^5.1.0"
+    "mysql2": "^3.14.1"
   }
 }
