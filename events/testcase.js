@@ -27,4 +27,8 @@ sambhuCars.on("add" , (index) => {
     console.log("all cars : "+sambhuCars.showCars());
 })
 
+
+
 sambhuCars.addCar("Tata Nexon")
+sambhuCars.addCar("Kia")
+sambhuCars.addCar("Maruti")

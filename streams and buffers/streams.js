@@ -1,53 +1,37 @@
 
-// A Stream is a continuous flow of data — like watching a YouTube video while it's still downloading.
 
-// Types of Streams:
-// Readable – Read data from a source (e.g., file)
-// Writable – Write data to a destination (e.g., file)
-// Duplex – Both readable and writable (e.g., TCP socket)
-// Transform – Modify data while reading/writing (e.g., compression)
+// 🚰 What Are Streams in Node.js?
+// A stream is a way to handle reading or writing data piece by piece, instead of all at once.
 
-// 🔹 Benefits:
-// Memory efficient: Handles large data (like videos or logs) chunk by chunk.
-// Non-blocking: Keeps Node.js fast and scalable.
+// ✅ Why Use Streams?
+// Handle large data (files, video, JSON)
+// Avoid memory overload
+// Efficient, non-blocking I/O
+// Enables real-time processing
 
-const fsPromise = require("node:fs/promises");
-const fs = require("node:fs");
-const http = require("node:http");
+// 📦 Four Types of Streams
+// Stream Type         	      Description	                 Example
+// Readable          	Can read data from it	        File input, HTTP request body
+// Writable	            Can write data to it            File output, HTTP response
+// Duplex	            Both readable and writable	    TCP socket
+// Transform	        Modify data while streaming	    Gzip compression, encryption
 
-const server = http.createServer();
+const fs = require("fs");
 
-async function getFile(path){
-    const data = await fsPromise.readFile(path , "utf8");
-    return data;
-}
-server.on("request" , async(req,res)=> {
-    if(req.url === "/favicon.ico") {return res.end();}
-    const data = await getFile("large.txt"); //not recommended
+const readable = fs.createReadStream("large.txt");
 
-    const readStream = fs.createReadStream("large.txt"); // recommended.
-    
-    readStream.on("data" , (chunk)=> res.write(chunk) );
-
-    readStream.on("end" , ()=> res.end())
-
-
+readable.on("data" , (chunk)=> {
+    console.log(chunk);
 })
 
-function readStream() {
-    const readable = fs.createReadStream("large.txt");
+// readable.once("data" , (chunk)=> {
+//     console.log(chunk.toString());
+// })
 
-    readable.on("data" , (chunk)=> {
-        console.log(chunk.toString());
-    })
-    
-    readable.on("end" , ()=> {
-        console.log("all data fetched from file")
-    })
-}
+readable.on("end" , ()=> {
+    console.log("file reading done...")
+})
 
-
-
-
-
-server.listen(8080);
+readable.on("error" , (err)=> {
+    console.error(err)
+})
