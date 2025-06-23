@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>users</title>
+    <style>
+        .user_container {
+            margin: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .user_list {
+            width: 500px;
+            background-color: #d4cbcbc7;
+            /* opacity: .8; */
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 20px;
+            color: black;
+            h4 {
+                color: green;
+                border: 2px solid blueviolet;
+                display: inline-block;
+                padding: 4px;
+                border-radius: 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <%- include("./partials/navbar") %>
+    <div class="user_container" >
+        <h1>Userlist</h1>
+            <% users.forEach((user,index) => { %>
+             <div class="user_list">
+                <h4>User No.<%= index+1 %></h4>
+                <ul>
+                    <li>Name -> <%=user.name  %> </li>
+                    <li>Role -> <%=user.role  %> </li>
+                </ul>
+             </div>
+            <% }) %>
+    </div>
+</body>
+</html>
