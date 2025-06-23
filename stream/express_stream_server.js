@@ -3,7 +3,8 @@ const express = require("express");
 const monitor = require("express-status-monitor");
 const fs = require("node:fs");
 const path = require("node:path");
-const { pipeline } = require("node:stream");
+const { pipeline , Transform } = require("node:stream");
+const zlib = require("zlib");
 
 const app = express();
 
@@ -65,6 +66,46 @@ app.get("/stream/video", (req, res) => {
             }
         }
     )
+})
+
+app.get("/download/text", (req, res) => {
+
+    res.writeHead(200, {
+        "content-type": "text/plain",
+        "content-disposition": "attachment; filename = file.txt.gz "
+    })
+
+    const uppercase = new Transform({
+        transform(chunk , encoding , callback){
+            callback(null , chunk.toString().toUpperCase());
+        }
+    })
+
+    pipeline(
+        fs.createReadStream(path.join(__dirname, "data/large.txt")),
+        uppercase,
+        zlib.createGzip(),
+        res,
+        (err) => { if (err) { console.error(err) } }
+    )
+
+})
+
+app.get("/stream/image" , (req,res)=> {
+    res.writeHead(200 , {
+        "content-type" : "image",
+    })
+
+    fs.createReadStream("data/img.png").pipe(res)
+
+})
+
+app.get("/download/image" , (req,res)=> {
+    res.writeHead(200 , {
+        "content-type" : "image",
+        "content-disposition" : "attachment"
+    })
+    fs.createReadStream("data/img.png").pipe(res);
 })
 
 app.listen(8080, () => console.log("running on 8080"));
